@@ -1,0 +1,24 @@
+repositories {
+    jcenter()
+}
+
+apply plugin: 'java'
+apply plugin: "idea"
+apply plugin: "maven"
+apply plugin: "jacoco"
+
+group 'com.larscheidschmitzhermes'
+sourceCompatibility = 1.8
+
+dependencies {
+    //keycloak
+    compile group: 'org.keycloak', name: 'keycloak-server-spi-private', version: '3.2.1.Final'
+    compile group: 'org.keycloak', name: 'keycloak-server-spi', version: '3.2.1.Final'
+    compile group: 'org.keycloak', name: 'keycloak-services', version: '3.2.1.Final'
+
+    // Use JUnit test framework
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.9'
+    testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+}
+
