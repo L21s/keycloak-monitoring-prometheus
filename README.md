@@ -8,7 +8,7 @@ This project will help you expose two metrics:
 - `keycloak_events_total` with labels 
     - realm="String",
     - type="[`org.keycloak.events.EventType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/EventType.java)"
-- keycloak_admin_events_total with labels 
+- `keycloak_admin_events_total` with labels 
     - realm="String"
     - operation="[`org.keycloak.events.admin.OperationType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/admin/OperationType.java)"
     - resource="[`org.keycloak.events.admin.ResourceType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/admin/ResourceType.java)"
