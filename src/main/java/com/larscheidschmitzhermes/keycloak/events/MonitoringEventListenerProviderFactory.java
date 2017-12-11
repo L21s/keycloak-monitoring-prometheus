@@ -7,8 +7,9 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
 public class MonitoringEventListenerProviderFactory implements EventListenerProviderFactory {
-    private String eventsDirectory;
+    private final String EVENTS_DIRECTORY_ENV = "KEYCLOAK_PROMETHEUS_EVENTS_DIR";
 
+    private String eventsDirectory;
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
@@ -17,7 +18,12 @@ public class MonitoringEventListenerProviderFactory implements EventListenerProv
 
     @Override
     public void init(Config.Scope config) {
-        this.eventsDirectory = config.get("eventsDirectory");
+        String eventsDirectoryConfigVal = config.get("eventsDirectory");
+        if (eventsDirectoryConfigVal != null && !eventsDirectoryConfigVal.isEmpty()) {
+            this.eventsDirectory = eventsDirectoryConfigVal;
+        } else {
+            this.eventsDirectory = System.getenv(EVENTS_DIRECTORY_ENV);
+        }
     }
 
     @Override
