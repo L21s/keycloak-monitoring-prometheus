@@ -22,6 +22,7 @@ Detailled instructions on SPI installation can be found in the [keycloak docs](h
 Also make sure to check out the [`Dockerfile`](Dockerfile).
 ### Configure SPI
 The SPI requires you to provide a configuration option describing where to write the event counter files.
+#### Configuring in standalone.xml
 SPI configuration happens in keycloaks `standalone.xml`.
 Within `<subsystem xmlns="urn:jboss:domain:keycloak-server:1.1"></subsystem>` you need to add the following lines:
 ```xml
@@ -34,6 +35,9 @@ Within `<subsystem xmlns="urn:jboss:domain:keycloak-server:1.1"></subsystem>` yo
 </spi>
 ```
 For a more advanced example (directory name read from env variable) see the [`Dockerfile`](Dockerfile) again.
+#### Configuring using an environment variable
+The metrics directory can be specified by setting the `KEYCLOAK_PROMETHEUS_EVENTS_DIR` environment variable.
+This value will only be used if the `eventsDirectory` configuration value is not set or if it is an empty string.
 ### Configuration in keycloak
 ![setup](setup.png)
 In keycloak's admin console under `Events > Config` you need to add `com.larscheidschmitzhermes:keycloak-monitoring-prometheus` as an Event Listener.
