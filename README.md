@@ -1,4 +1,5 @@
 [![Release](https://jitpack.io/v/larscheid-schmitzhermes/keycloak-monitoring-prometheus.svg)](https://jitpack.io/#larscheid-schmitzhermes/keycloak-monitoring-prometheus)
+[![Number of Downloads](https://jitpack.io/v/larscheid-schmitzhermes/keycloak-monitoring-prometheus/month.svg)](https://jitpack.io/#larscheid-schmitzhermes/keycloak-monitoring-prometheus)
 
 # keycloak-monitoring-prometheus
 Out of the box, `keycloak` does not expose any metrics about what it is doing.
