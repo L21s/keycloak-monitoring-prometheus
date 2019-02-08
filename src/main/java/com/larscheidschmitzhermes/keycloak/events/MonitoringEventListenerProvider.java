@@ -67,7 +67,7 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
         return sb.toString();
     }
 
-    private File getOrCreateCounterFile(String fileName) {
+    private synchronized File getOrCreateCounterFile(String fileName) {
         File f = new File(eventsDirectory + File.separator + fileName);
         if (!f.exists()) {
             try {
