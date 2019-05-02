@@ -8,13 +8,17 @@ This project counts those events and allows you to expose them to `prometheus` w
 ## What metrics do you get?
 This project will help you expose two metrics:
 
-- `keycloak_events_total` with labels 
+- `keycloak_events_total` with labels
     - realm="String",
-    - type="[`org.keycloak.events.EventType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/EventType.java)"
-- `keycloak_admin_events_total` with labels 
+    - type="[`org.keycloak.events.EventType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/EventType.java)",
+    - client_id="String",
+    - ip_address="String"
+- `keycloak_admin_events_total` with labels
     - realm="String"
     - operation="[`org.keycloak.events.admin.OperationType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/admin/OperationType.java)"
-    - resource="[`org.keycloak.events.admin.ResourceType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/admin/ResourceType.java)"
+    - resource="[`org.keycloak.events.admin.ResourceType`](https://github.com/keycloak/keycloak/blob/master/server-spi-private/src/main/java/org/keycloak/events/admin/ResourceType.java)",
+    - client_id="String",
+    - ip_address="String"
 
 The magic lies in the labels. The labels basically expose the underlying keycloak event details and allow for detailed filtering. The unique metric + label combination's value will be increased by one whenever an event of this type is emmited in keycloak.
 ## Setup
@@ -48,5 +52,5 @@ Make sure you do this for every realm you want to monitor!
 ### Getting your metrics into prometheus
 Once everything is setup in keycloak, you will start seeing files like `keycloak_admin_events_total;realm=master;operation=CREATE;resource=USER` in your configured events directory.
 These files contain a number stating how often an event with the given parameters was emitted.
-The naming scheme is compatible with [`prometheus-filesystem-exporter`](https://github.com/larscheid-schmitzhermes/prometheus-filesystem-exporter), 
+The naming scheme is compatible with [`prometheus-filesystem-exporter`](https://github.com/larscheid-schmitzhermes/prometheus-filesystem-exporter),
 which you should run next to keycloak to get your events exposed in a prometheus compatible format.

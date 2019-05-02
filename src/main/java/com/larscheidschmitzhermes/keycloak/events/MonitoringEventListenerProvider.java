@@ -17,6 +17,8 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
     private final char DELIMITER = ';';
     private final char LABEL_VALUE_DELIMITER = '=';
     private final String REALM = "realm";
+    private final String CLIENT_ID = "client_id";
+    private final String IP_ADDRESS = "ip_address";
     private final String TYPE = "type";
     private final String OPERATION = "operation";
     private final String RESOURCE = "resource";
@@ -43,6 +45,10 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
         sb.append(DELIMITER);
         sb.append(generateLabel(REALM, event.getRealmId()));
         sb.append(DELIMITER);
+        sb.append(generateLabel(CLIENT_ID, event.getClientId()));
+        sb.append(DELIMITER);
+        sb.append(generateLabel(IP_ADDRESS, event.getIpAddress()));
+        sb.append(DELIMITER);
         sb.append(generateLabel(TYPE, event.getType().toString()));
         return sb.toString();
     }
@@ -52,6 +58,10 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
         sb.append("keycloak_admin_events_total");
         sb.append(DELIMITER);
         sb.append(generateLabel(REALM, event.getRealmId()));
+        sb.append(DELIMITER);
+        sb.append(generateLabel(CLIENT_ID, event.getAuthDetails().getClientId()));
+        sb.append(DELIMITER);
+        sb.append(generateLabel(IP_ADDRESS, event.getAuthDetails().getIpAddress()));
         sb.append(DELIMITER);
         sb.append(generateLabel(OPERATION, event.getOperationType().toString()));
         sb.append(DELIMITER);
