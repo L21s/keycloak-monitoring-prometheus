@@ -1,0 +1,2 @@
+/subsystem=keycloak-server/spi=eventsListener: add()
+/subsystem=keycloak-server/spi=eventsListener/provider="com.larscheidschmitzhermes:keycloak-monitoring-prometheus": add(enabled=true,properties={eventsDirectory=/metrics})
