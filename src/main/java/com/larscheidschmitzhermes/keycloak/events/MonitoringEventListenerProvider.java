@@ -45,7 +45,7 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
         sb.append(DELIMITER);
         sb.append(generateLabel(REALM, event.getRealmId()));
         sb.append(DELIMITER);
-        sb.append(generateLabel(CLIENT_ID, event.getClientId()));
+        sb.append(generateLabel(CLIENT_ID, sanitizeClientId(event.getClientId())));
         sb.append(DELIMITER);
         sb.append(generateLabel(IP_ADDRESS, event.getIpAddress()));
         sb.append(DELIMITER);
@@ -59,7 +59,7 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
         sb.append(DELIMITER);
         sb.append(generateLabel(REALM, event.getRealmId()));
         sb.append(DELIMITER);
-        sb.append(generateLabel(CLIENT_ID, event.getAuthDetails().getClientId()));
+        sb.append(generateLabel(CLIENT_ID, sanitizeClientId(event.getAuthDetails().getClientId())));
         sb.append(DELIMITER);
         sb.append(generateLabel(IP_ADDRESS, event.getAuthDetails().getIpAddress()));
         sb.append(DELIMITER);
@@ -99,6 +99,10 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String sanitizeClientId(String value) {
+        return value.replaceAll("[^0-9A-Za-z\\-\\_ ]", "_");
     }
 
     @Override

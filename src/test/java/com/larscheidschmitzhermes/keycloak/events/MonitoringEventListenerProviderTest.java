@@ -29,6 +29,15 @@ public class MonitoringEventListenerProviderTest {
             return event;
     }
 
+    private Event maliciousEvent() {
+        Event event = new Event();
+            event.setClientId("a'a\\'b\"c>?>%}}%%>c<[[?${{%}}cake\\");
+            event.setIpAddress("4.4.4.4");
+            event.setRealmId("test-realm");
+            event.setType(EventType.LOGIN);
+            return event;
+    }
+
     private AdminEvent adminEvent() {
         AuthDetails details = new AuthDetails();
         details.setClientId("42");
@@ -48,6 +57,18 @@ public class MonitoringEventListenerProviderTest {
         listener.onEvent(event());
 
         File expectedFile = new File(tmp.getRoot().getAbsolutePath() + File.separator + "keycloak_events_total;realm=test-realm;client_id=23;ip_address=4.4.4.4;type=LOGIN");
+
+        MatcherAssert.assertThat(expectedFile.exists(), Is.is(true));
+        MatcherAssert.assertThat(FileUtils.readFileToString(expectedFile), Is.is("1"));
+    }
+
+    @Test
+    public void shouldGenerateFilesWithCorrectNamesForMaliciousEvents() throws IOException {
+        MonitoringEventListenerProvider listener = new MonitoringEventListenerProvider(tmp.getRoot().getAbsolutePath());
+
+        listener.onEvent(maliciousEvent());
+
+        File expectedFile = new File(tmp.getRoot().getAbsolutePath() + File.separator + "keycloak_events_total;realm=test-realm;client_id=a_a__b_c_________c__________cake_;ip_address=4.4.4.4;type=LOGIN");
 
         MatcherAssert.assertThat(expectedFile.exists(), Is.is(true));
         MatcherAssert.assertThat(FileUtils.readFileToString(expectedFile), Is.is("1"));
