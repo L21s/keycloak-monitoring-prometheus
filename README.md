@@ -52,7 +52,8 @@ Make sure you do this for every realm you want to monitor!
 #### Configuring using Keycloak CLI
 Keycloak supports scripting of configuration changes via CLI. This has the benefit of decoupling configuration changes from the deployed keycloak version allowing easy upgrades of binaries. This is especially beneficial in a containerized environment.
 ### Using CLI to configure Keycloak
-To configure the Prometheus exporter via CLI add the content of [`jboss-cli`](jboss-cli) to `<path to your installation>/keycloak-server/jboss-cli/startup-scripts/startup-standalone.cli`. During startup of Keycloak the cli will add the configuration entries to `standalone.xml`
+To configure the Prometheus exporter via CLI see [`Dockerfile`](Dockerfile).
+The content of [`jboss-cli`](jboss-cli) is added with `jboss-cli.sh` and `embed-server mode`. During docker build you will see Keycloak adding the configuration entries to `standalone.xml`.
 For more information refer to [`Keycloak documentation`](https://www.keycloak.org/docs/7.0/server_installation/#cli-scripting)
 
 ### Getting your metrics into prometheus
