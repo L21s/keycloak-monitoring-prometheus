@@ -1,3 +1,4 @@
-FROM jboss/keycloak:3.2.1.Final
-RUN sed -ie 's|<subsystem xmlns="urn:jboss:domain:keycloak-server:1.1">|<subsystem xmlns="urn:jboss:domain:keycloak-server:1.1"><spi name="eventsListener"><provider name="com.larscheidschmitzhermes:keycloak-monitoring-prometheus" enabled="true"><properties><property name="eventsDirectory" value="${env.EVENTS_DIRECTORY:/metrics}"/></properties></provider></spi>|g' /opt/jboss/keycloak/standalone/configuration/standalone.xml
+FROM jboss/keycloak:7.0.0
+COPY jboss-cli /opt/jboss/startup-scripts/prometheus.cli
+RUN /opt/jboss/keycloak/bin/run-cli.sh --file=/opt/jboss/startup-scripts/prometheus.cli
 COPY build/libs/*.jar keycloak/providers/
