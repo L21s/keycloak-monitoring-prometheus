@@ -49,6 +49,12 @@ This value will only be used if the `eventsDirectory` configuration value is not
 ![setup](setup.png)
 In keycloak's admin console under `Events > Config` you need to add `com.larscheidschmitzhermes:keycloak-monitoring-prometheus` as an Event Listener.
 Make sure you do this for every realm you want to monitor!
+#### Configuring using Keycloak CLI
+Keycloak supports scripting of configuration changes via CLI. This has the benefit of decoupling configuration changes from the deployed keycloak version allowing easy upgrades of binaries. This is especially beneficial in a containerized environment.
+### Using CLI to configure Keycloak
+To configure the Prometheus exporter via CLI add the content of [`jboss-cli`](jboss-cli) to `<path to your installation>/keycloak-server/jboss-cli/startup-scripts/startup-standalone.cli`. During startup of Keycloak the cli will add the configuration entries to `standalone.xml`
+For more information refer to [`Keycloak documentation`](https://www.keycloak.org/docs/7.0/server_installation/#cli-scripting)
+
 ### Getting your metrics into prometheus
 Once everything is setup in keycloak, you will start seeing files like `keycloak_admin_events_total;realm=master;operation=CREATE;resource=USER` in your configured events directory.
 These files contain a number stating how often an event with the given parameters was emitted.
