@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.keycloak.events.Event;
@@ -93,9 +94,12 @@ public class MonitoringEventListenerProvider implements EventListenerProvider {
 
     private void increaseCounter(File counterFile) {
         try {
-            Long count = Long.parseLong(Files.readAllLines(counterFile.toPath()).get(0));
-            count++;
-            Files.write(counterFile.toPath(), count.toString().getBytes(Charset.forName("UTF-8")));
+            List<String> lines = Files.readAllLines(counterFile.toPath());
+            if (lines != null && lines.size() > 0){
+                Long count = Long.parseLong(lines.get(0));
+                count++;
+                Files.write(counterFile.toPath(), count.toString().getBytes(Charset.forName("UTF-8")));
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
